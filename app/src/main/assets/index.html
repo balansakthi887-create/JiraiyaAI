@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiraiya AI</title>
+<style>
+body {
+  margin: 0;
+  background: #101526;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+header { padding: 22px; color: #8de7ff; font-size: 25px; font-weight: bold; }
+.character { font-size: 100px; margin: 24px; }
+p { color: #c4cce0; }
+button {
+  background: #243b63;
+  color: white;
+  border: 1px solid #5f91d8;
+  border-radius: 14px;
+  padding: 14px;
+  margin: 6px;
+  font-size: 16px;
+}
+.panel {
+  margin: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #1b2540;
+}
+#answer { color: #9cebd7; }
+</style>
+</head>
+<body>
+<header>JIRAIYA AI</header>
+<div class="character">🧙🏻‍♂️</div>
+<h2 id="greeting">Your AI companion</h2>
+<p>Tamil • English</p>
+<div class="panel">
+  <button onclick="setLang('en')">English</button>
+  <button onclick="setLang('ta')">தமிழ்</button>
+  <p id="message">Hello! How can I help you?</p>
+  <button onclick="reply()">Chat</button>
+  <button onclick="lesson()">Learn</button>
+  <p id="answer"></p>
+</div>
+<script>
+let lang = 'en';
+function setLang(value) {
+  lang = value;
+  document.getElementById('message').textContent =
+    lang === 'ta' ? 'வணக்கம்! நான் எப்படி உதவலாம்?' :
+    'Hello! How can I help you?';
+  document.getElementById('greeting').textContent =
+    lang === 'ta' ? 'உங்கள் AI நண்பன்' : 'Your AI companion';
+}
+function reply() {
+  document.getElementById('answer').textContent =
+    lang === 'ta' ? 'இது ஆரம்ப மாதிரி செயலி. உண்மையான AI இன்னும் சேர்க்கப்படவில்லை.' :
+    'This is a starter demo. Real AI is not connected yet.';
+}
+function lesson() {
+  document.getElementById('answer').textContent =
+    lang === 'ta' ? 'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.' :
+    'Lesson 1: Learn something new every day.';
+}
+</script>
+</body>
+</html>
