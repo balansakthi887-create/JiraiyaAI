@@ -1,28 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101526">
 <title>Jiraiya AI</title>
 <style>
+* { box-sizing: border-box; }
 body {
   margin: 0;
+  min-height: 100vh;
   background: #101526;
   color: white;
   font-family: Arial, sans-serif;
   text-align: center;
 }
-header { padding: 22px; color: #8de7ff; font-size: 25px; font-weight: bold; }
-.character { font-size: 100px; margin: 24px; }
+header {
+  padding: 22px;
+  color: #8de7ff;
+  font-size: 25px;
+  font-weight: bold;
+}
+.character { font-size: 82px; margin: 12px; }
 p { color: #c4cce0; }
 button {
   background: #243b63;
   color: white;
   border: 1px solid #5f91d8;
   border-radius: 14px;
-  padding: 14px;
-  margin: 6px;
+  padding: 13px 16px;
+  margin: 5px;
   font-size: 16px;
+  cursor: pointer;
 }
 .panel {
   margin: 16px;
@@ -30,41 +40,148 @@ button {
   border-radius: 18px;
   background: #1b2540;
 }
-#answer { color: #9cebd7; }
+#answer {
+  color: #9cebd7;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.chat-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+input {
+  min-width: 0;
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid #5f91d8;
+  background: #101526;
+  color: white;
+  font-size: 16px;
+}
+#sendButton { margin: 0; }
+#chatLog {
+  text-align: left;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.chat-message {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+.user-message { background: #243b63; }
+.ai-message { background: #101526; color: #9cebd7; }
+.small { font-size: 13px; color: #aab5ce; }
 </style>
 </head>
 <body>
 <header>JIRAIYA AI</header>
-<div class="character">🧙🏻‍♂️</div>
+<div class="character" aria-label="Wizard character">🧙🏻‍♂️</div>
 <h2 id="greeting">Your AI companion</h2>
 <p>Tamil • English</p>
+
 <div class="panel">
   <button onclick="setLang('en')">English</button>
   <button onclick="setLang('ta')">தமிழ்</button>
+
   <p id="message">Hello! How can I help you?</p>
-  <button onclick="reply()">Chat</button>
+
+  <div id="chatLog" aria-live="polite"></div>
+
+  <div class="chat-row">
+    <input id="userInput" type="text"
+      placeholder="Type your message..."
+      aria-label="Your message"
+      maxlength="500">
+    <button id="sendButton" onclick="sendMessage()">Send</button>
+  </div>
+
   <button onclick="lesson()">Learn</button>
   <p id="answer"></p>
+  <p class="small" id="status">
+    Starter version — demo replies, no real AI connected.
+  </p>
 </div>
+
 <script>
 let lang = 'en';
+
 function setLang(value) {
   lang = value;
+  document.documentElement.lang = value;
+
   document.getElementById('message').textContent =
-    lang === 'ta' ? 'வணக்கம்! நான் எப்படி உதவலாம்?' :
-    'Hello! How can I help you?';
+    lang === 'ta'
+      ? 'வணக்கம்! நான் எப்படி உதவலாம்?'
+      : 'Hello! How can I help you?';
+
   document.getElementById('greeting').textContent =
     lang === 'ta' ? 'உங்கள் AI நண்பன்' : 'Your AI companion';
+
+  document.getElementById('userInput').placeholder =
+    lang === 'ta' ? 'உங்கள் செய்தியை எழுதுங்கள்...' :
+    'Type your message...';
+
+  document.getElementById('userInput').setAttribute(
+    'aria-label',
+    lang === 'ta' ? 'உங்கள் செய்தி' : 'Your message'
+  );
+
+  document.getElementById('sendButton').textContent =
+    lang === 'ta' ? 'அனுப்பு' : 'Send';
+
+  document.getElementById('status').textContent =
+    lang === 'ta'
+      ? 'தொடக்க பதிப்பு — மாதிரி பதில்கள் மட்டுமே; உண்மையான AI இணைக்கப்படவில்லை.'
+      : 'Starter version — demo replies, no real AI connected.';
 }
-function reply() {
-  document.getElementById('answer').textContent =
-    lang === 'ta' ? 'இது ஆரம்ப மாதிரி செயலி. உண்மையான AI இன்னும் சேர்க்கப்படவில்லை.' :
-    'This is a starter demo. Real AI is not connected yet.';
+
+function addMessage(text, type) {
+  const item = document.createElement('div');
+  item.className = 'chat-message ' +
+    (type === 'user' ? 'user-message' : 'ai-message');
+  item.textContent = (type === 'user' ? 'You: ' : 'Jiraiya: ') + text;
+  document.getElementById('chatLog').appendChild(item);
+  document.getElementById('chatLog').scrollTop =
+    document.getElementById('chatLog').scrollHeight;
 }
+
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+
+  if (!text) {
+    input.focus();
+    return;
+  }
+
+  addMessage(text, 'user');
+  input.value = '';
+
+  const response = lang === 'ta'
+    ? 'உங்கள் செய்தி பெறப்பட்டது. இது இன்னும் மாதிரி செயலி; உண்மையான AI பதில்கள் இணைக்கப்படவில்லை.'
+    : 'Your message was received. This is still a demo; real AI responses are not connected yet.';
+
+  addMessage(response, 'ai');
+}
+
+document.getElementById('userInput').addEventListener(
+  'keydown',
+  function(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  }
+);
+
 function lesson() {
   document.getElementById('answer').textContent =
-    lang === 'ta' ? 'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.' :
-    'Lesson 1: Learn something new every day.';
+    lang === 'ta'
+      ? 'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.'
+      : 'Lesson 1: Learn something new every day.';
 }
 </script>
 </body>
