@@ -1,9 +1,10 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:allowBackup="true"
-        android:label="Jiraiya AI"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+    android:allowBackup="true"
+    android:label="Maxter J"
+    android:icon="@drawable/maxter_j_logo"
+    android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity
             android:name=".MainActivity"
             android:exported="true">
