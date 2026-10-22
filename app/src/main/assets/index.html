@@ -78,7 +78,7 @@ input {
 </style>
 </head>
 <body>
-<header>JIRAIYA AI</header>
+<header>MAXTER J</header>
 <div class="character" aria-label="Wizard character">🧙🏻‍♂️</div>
 <h2 id="greeting">Your AI companion</h2>
 <p>Tamil • English</p>
@@ -143,7 +143,7 @@ function addMessage(text, type) {
   const item = document.createElement('div');
   item.className = 'chat-message ' +
     (type === 'user' ? 'user-message' : 'ai-message');
-  item.textContent = (type === 'user' ? 'You: ' : 'Jiraiya: ') + text;
+  item.textContent = (type === 'user' ? 'You: ' : 'Maxter J: ') + text;
   document.getElementById('chatLog').appendChild(item);
   document.getElementById('chatLog').scrollTop =
     document.getElementById('chatLog').scrollHeight;
@@ -158,8 +158,8 @@ function getOfflineReply(text) {
     msg.includes("வணக்கம்")
   ) {
     return lang === "ta"
-      ? "வணக்கம்! நான் ஜிரையா. இன்று உங்களுக்கு என்ன உதவி வேண்டும்?"
-      : "Hello! I'm Jiraiya. How can I help you today?";
+      ? "வணக்கம்! நான் மேக்ஸ்டர் . இன்று உங்களுக்கு என்ன உதவி வேண்டும்?"
+      : "Hello! I'm Maxter J. How can I help you today?";
   }
 
   if (
@@ -167,8 +167,8 @@ function getOfflineReply(text) {
     msg.includes("உன் பெயர்")
   ) {
     return lang === "ta"
-      ? "என் பெயர் ஜிரையா AI."
-      : "My name is Jiraiya AI.";
+      ? "என் பெயர் மேக்ஸ்டர் ."
+      : "My name is Maxter J.";
   }
 
   if (
