@@ -1,203 +1,570 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101526">
-<title>Maxter J</title>
+<meta name="theme-color" content="#080d1b">
+<title>Maxter J AI</title>
+
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080d1b;
+  --panel: #111b30;
+  --blue: #55d8ff;
+  --purple: #9274ff;
+  --text: #f4f7ff;
+  --muted: #98a8c5;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
-  background: #101526;
-  color: white;
+  background:
+    radial-gradient(ellipse at 50% 30%,
+      #19284b 0%, #0b1224 45%, var(--bg) 78%);
+  color: var(--text);
   font-family: Arial, sans-serif;
-  text-align: center;
 }
-header {
-  padding: 22px;
-  color: #8de7ff;
-  font-size: 25px;
-  font-weight: bold;
+
+button, input {
+  font: inherit;
 }
-.character { font-size: 82px; margin: 12px; }
-p { color: #c4cce0; }
+
 button {
-  background: #243b63;
-  color: white;
-  border: 1px solid #5f91d8;
-  border-radius: 14px;
-  padding: 13px 16px;
-  margin: 5px;
-  font-size: 16px;
   cursor: pointer;
+  color: var(--text);
 }
-.panel {
-  margin: 16px;
-  padding: 16px;
-  border-radius: 18px;
-  background: #1b2540;
-}
-#answer {
-  color: #9cebd7;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-.chat-row {
+
+.app {
+  max-width: 520px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 18px 18px 28px;
   display: flex;
-  gap: 8px;
-  margin-top: 12px;
+  flex-direction: column;
 }
-input {
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #4b91d7;
+  border-radius: 15px;
+  background: #142541;
+  color: var(--blue);
+  font-size: 24px;
+  box-shadow: 0 0 20px #48bfff20;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid #344562;
+  background: #111b30;
+  font-size: 21px;
+}
+
+.menu-panel {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #344562;
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.menu-panel.open {
+  display: block;
+}
+
+.menu-panel button {
+  padding: 10px 13px;
+  margin: 4px;
+  border: 1px solid #344562;
+  border-radius: 11px;
+  background: #1a2944;
+}
+
+.hero {
+  text-align: center;
+  padding-top: 34px;
+}
+
+.online {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #9debd0;
+  background: #17352f80;
+  border: 1px solid #306451;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #63e6ad;
+}
+
+.character-wrap {
+  position: relative;
+  width: 205px;
+  height: 205px;
+  margin: 24px auto 18px;
+  display: grid;
+  place-items: center;
+}
+
+.orbit {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid #56cfff55;
+  border-radius: 50%;
+  box-shadow: 0 0 35px #5a8fff15;
+}
+
+.orbit:before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px dashed #8e83ff60;
+  border-radius: 50%;
+}
+
+.character {
+  position: relative;
+  width: 155px;
+  height: 155px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    #284c78 0%, #172c4c 55%, #101a30 75%);
+  border: 1px solid #60bfff65;
+  box-shadow: 0 0 42px #368bff30;
+  font-size: 88px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+h1 {
+  margin: 0;
+  font-size: 29px;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin: 26px 0 18px;
+}
+
+.quick {
+  padding: 14px 5px;
+  border: 1px solid #293a59;
+  border-radius: 15px;
+  background: #121e34cc;
+  font-size: 12px;
+}
+
+.quick span {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.chat-panel {
+  padding: 16px;
+  border: 1px solid #2b3e60;
+  border-radius: 22px;
+  background: #111b30eF;
+  box-shadow: 0 12px 40px #00000020;
+}
+
+.panel-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 13px;
+}
+
+#chatLog {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 13px;
+}
+
+.chat-message {
+  padding: 11px 13px;
+  border-radius: 13px;
+  line-height: 1.5;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.user-message {
+  align-self: flex-end;
+  max-width: 90%;
+  background: #263f69;
+}
+
+.ai-message {
+  align-self: flex-start;
+  max-width: 95%;
+  background: #192640;
+  color: #b5f3e2;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#userInput {
+  width: 100%;
   min-width: 0;
-  flex: 1;
-  padding: 13px;
-  border-radius: 12px;
-  border: 1px solid #5f91d8;
-  background: #101526;
+  padding: 15px;
   color: white;
+  background: #080f20;
+  border: 1px solid #344967;
+  border-radius: 14px;
+  outline: none;
   font-size: 16px;
 }
-#sendButton { margin: 0; }
-#chatLog {
-  text-align: left;
-  max-height: 260px;
-  overflow-y: auto;
+
+#userInput:focus {
+  border-color: var(--blue);
 }
-.chat-message {
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 10px;
+
+#userInput::placeholder {
+  color: #8191ad;
+}
+
+.send-row {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+  margin-top: 13px;
+}
+
+.action-button {
+  min-width: 64px;
+  min-height: 52px;
+  padding: 10px 20px;
+  border-radius: 16px;
+  border: 1px solid #5265c9;
+  background: linear-gradient(135deg, #397edc, #7554d8);
+  font-size: 23px;
+  box-shadow: 0 0 22px #6b71ff20;
+}
+
+.mic-button {
+  border-color: #3b5d7e;
+  background: #1a2c46;
+}
+
+.mic-button.listening {
+  border-color: #ff8282;
+  background: #642c42;
+}
+
+.small {
+  margin: 12px 0 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+#answer {
+  color: #b5f3e2;
+  line-height: 1.6;
+  font-size: 14px;
   overflow-wrap: anywhere;
 }
-.user-message { background: #243b63; }
-.ai-message { background: #101526; color: #9cebd7; }
-.small { font-size: 13px; color: #aab5ce; }
+
+.learn-button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 12px;
+  border: 1px solid #344562;
+  border-radius: 13px;
+  background: #1a2944;
+}
+
+footer {
+  text-align: center;
+  padding: 23px 0 4px;
+  color: #71819f;
+  font-size: 11px;
+}
+
+@media (max-width: 360px) {
+  .app { padding: 14px 12px 24px; }
+  .character-wrap { transform: scale(.9); margin-top: 12px; }
+  h1 { font-size: 25px; }
+}
 </style>
 </head>
+
 <body>
-<header>MAXTER J</header>
-<div class="character" aria-label="Wizard character">🧙🏻‍♂️</div>
-<h2 id="greeting">Your AI companion</h2>
-<p>Tamil • English</p>
+<div class="app">
 
-<div class="panel">
-  <button onclick="setLang('en')">English</button>
-  <button onclick="setLang('ta')">தமிழ்</button>
+<header>
+  <div class="brand">
+    <div class="logo">油</div>
+    <div>
+      <div class="brand-name">MAXTER J</div>
+      <div class="brand-sub">YOUR PERSONAL AI</div>
+    </div>
+  </div>
 
-  <p id="message">Hello! How can I help you?</p>
+  <button class="icon-button" id="menuButton"
+    aria-label="Open menu" aria-expanded="false">☰</button>
+</header>
+
+<div class="menu-panel" id="menuPanel">
+  <strong id="languageTitle">Language / மொழி</strong>
+  <div>
+    <button onclick="setLang('en')">English</button>
+    <button onclick="setLang('ta')">தமிழ்</button>
+  </div>
+  <button onclick="clearChat()" id="clearButton">Clear chat</button>
+</div>
+
+<section class="hero">
+  <div class="online">
+    <span class="dot"></span>
+    <span id="onlineText">READY TO HELP</span>
+  </div>
+
+  <div class="character-wrap">
+    <div class="orbit"></div>
+    <div class="character" aria-label="Temporary character">
+      🧙🏻‍♂️
+    </div>
+  </div>
+
+  <h1 id="greeting">Hello, I'm Maxter J</h1>
+  <p class="tagline" id="tagline">
+    Your personal companion.<br>
+    Ask, learn and explore.
+  </p>
+</section>
+
+<div class="quick-actions">
+  <button class="quick" onclick="quickAsk('help')">
+    <span>✦</span><span id="quickHelp">Ask AI</span>
+  </button>
+  <button class="quick" onclick="lesson()">
+    <span>▤</span><span id="quickLearn">Learn</span>
+  </button>
+  <button class="quick" onclick="startVoice()">
+    <span>🎙</span><span id="quickVoice">Talk</span>
+  </button>
+</div>
+
+<section class="chat-panel">
+  <div class="panel-title" id="chatTitle">Conversation</div>
 
   <div id="chatLog" aria-live="polite"></div>
 
-  <div class="chat-row">
-    <input id="userInput" type="text"
-      placeholder="Type your message..."
-      aria-label="Your message"
-      maxlength="500">
-    <button id="sendButton" onclick="sendMessage()">Send</button>
+  <div class="input-row">
+    <input id="userInput" type="text" maxlength="500"
+      placeholder="Ask me anything..."
+      aria-label="Your message">
   </div>
 
-  <button onclick="lesson()">Learn</button>
-  <p id="answer"></p>
+  <div class="send-row">
+    <button class="action-button" id="sendButton"
+      onclick="sendMessage()" aria-label="Send message">➤</button>
+
+    <button class="action-button mic-button" id="micButton"
+      onclick="startVoice()" aria-label="Speak">🎙</button>
+  </div>
+
   <p class="small" id="status">
-    Starter version — demo replies, no real AI connected.
+    Offline starter mode • Replies are limited
   </p>
+
+  <button class="learn-button" onclick="lesson()" id="lessonButton">
+    ✧ Learn something new
+  </button>
+
+  <p id="answer"></p>
+</section>
+
+<footer>MAXTER J • YOUR AI COMPANION</footer>
 </div>
 
 <script>
 let lang = 'en';
+let recognition = null;
+
+const $ = id => document.getElementById(id);
 
 function setLang(value) {
   lang = value;
   document.documentElement.lang = value;
 
-  document.getElementById('message').textContent =
-    lang === 'ta'
-      ? 'வணக்கம்! நான் எப்படி உதவலாம்?'
-      : 'Hello! How can I help you?';
+  $('greeting').textContent = value === 'ta'
+    ? 'வணக்கம், நான் மேக்ஸ்டர் ஜே'
+    : "Hello, I'm Maxter J";
 
-  document.getElementById('greeting').textContent =
-    lang === 'ta' ? 'உங்கள் AI நண்பன்' : 'Your AI companion';
+  $('tagline').innerHTML = value === 'ta'
+    ? 'உங்கள் தனிப்பட்ட நண்பன்.<br>கேளுங்கள், கற்றுக்கொள்ளுங்கள்.'
+    : 'Your personal companion.<br>Ask, learn and explore.';
 
-  document.getElementById('userInput').placeholder =
-    lang === 'ta' ? 'உங்கள் செய்தியை எழுதுங்கள்...' :
-    'Type your message...';
+  $('onlineText').textContent = value === 'ta'
+    ? 'உதவத் தயார்' : 'READY TO HELP';
 
-  document.getElementById('userInput').setAttribute(
-    'aria-label',
-    lang === 'ta' ? 'உங்கள் செய்தி' : 'Your message'
-  );
+  $('quickHelp').textContent = value === 'ta' ? 'கேளுங்கள்' : 'Ask AI';
+  $('quickLearn').textContent = value === 'ta' ? 'கற்றல்' : 'Learn';
+  $('quickVoice').textContent = value === 'ta' ? 'பேசுங்கள்' : 'Talk';
+  $('chatTitle').textContent = value === 'ta' ? 'உரையாடல்' : 'Conversation';
 
-  document.getElementById('sendButton').textContent =
-    lang === 'ta' ? 'அனுப்பு' : 'Send';
+  $('userInput').placeholder = value === 'ta'
+    ? 'உங்கள் கேள்வியை எழுதுங்கள்...'
+    : 'Ask me anything...';
 
-  document.getElementById('status').textContent =
-    lang === 'ta'
-      ? 'தொடக்க பதிப்பு — மாதிரி பதில்கள் மட்டுமே; உண்மையான AI இணைக்கப்படவில்லை.'
-      : 'Starter version — demo replies, no real AI connected.';
+  $('userInput').setAttribute('aria-label',
+    value === 'ta' ? 'உங்கள் செய்தி' : 'Your message');
+
+  $('sendButton').setAttribute('aria-label',
+    value === 'ta' ? 'செய்தி அனுப்பு' : 'Send message');
+
+  $('micButton').setAttribute('aria-label',
+    value === 'ta' ? 'பேசுங்கள்' : 'Speak');
+
+  $('status').textContent = value === 'ta'
+    ? 'ஆஃப்லைன் தொடக்கப் பதிப்பு • பதில்கள் குறைவானவை'
+    : 'Offline starter mode • Replies are limited';
+
+  $('lessonButton').textContent = value === 'ta'
+    ? '✧ புதிதாக ஒன்றைக் கற்கலாம்'
+    : '✧ Learn something new';
+
+  $('languageTitle').textContent = value === 'ta'
+    ? 'மொழி / Language' : 'Language / மொழி';
+
+  $('clearButton').textContent = value === 'ta'
+    ? 'உரையாடலை அழி' : 'Clear chat';
 }
 
 function addMessage(text, type) {
   const item = document.createElement('div');
   item.className = 'chat-message ' +
     (type === 'user' ? 'user-message' : 'ai-message');
-  item.textContent = (type === 'user' ? 'You: ' : 'Maxter J: ') + text;
-  document.getElementById('chatLog').appendChild(item);
-  document.getElementById('chatLog').scrollTop =
-    document.getElementById('chatLog').scrollHeight;
+
+  item.textContent =
+    (type === 'user' ? (lang === 'ta' ? 'நீங்கள்: ' : 'You: ')
+      : 'Maxter J: ') + text;
+
+  $('chatLog').appendChild(item);
+  $('chatLog').scrollTop = $('chatLog').scrollHeight;
 }
-  
+
 function getOfflineReply(text) {
   const msg = text.toLowerCase().trim();
 
-  if (
-    msg.includes("hello") ||
-    msg.includes("hi") ||
-    msg.includes("வணக்கம்")
-  ) {
-    return lang === "ta"
-      ? "வணக்கம்! நான் மேக்ஸ்டர் . இன்று உங்களுக்கு என்ன உதவி வேண்டும்?"
+  if (msg.includes('hello') || msg.includes('hi') ||
+      msg.includes('வணக்கம்')) {
+    return lang === 'ta'
+      ? 'வணக்கம்! இன்று உங்களுக்கு என்ன உதவி வேண்டும்?'
       : "Hello! I'm Maxter J. How can I help you today?";
   }
 
-  if (
-    msg.includes("your name") ||
-    msg.includes("உன் பெயர்")
-  ) {
-    return lang === "ta"
-      ? "என் பெயர் மேக்ஸ்டர் ."
-      : "My name is Maxter J.";
+  if (msg.includes('your name') || msg.includes('உன் பெயர்') ||
+      msg.includes('உங்கள் பெயர்')) {
+    return lang === 'ta'
+      ? 'என் பெயர் மேக்ஸ்டர் ஜே.'
+      : 'My name is Maxter J.';
   }
 
-  if (
-    msg.includes("time") ||
-    msg.includes("நேரம்")
-  ) {
-    return lang === "ta"
-      ? "சரியான நேரத்தை உங்கள் தொலைபேசியில் பார்க்கவும்."
-      : "Please check your phone for the current time.";
+  if (msg.includes('time') || msg.includes('நேரம்')) {
+    return lang === 'ta'
+      ? 'சரியான நேரத்தை உங்கள் தொலைபேசியில் பார்க்கவும்.'
+      : 'Please check your phone for the current time.';
   }
 
-  if (
-    msg.includes("help") ||
-    msg.includes("உதவி")
-  ) {
-    return lang === "ta"
-      ? "உங்கள் கேள்வியைச் சுருக்கமாகக் கேளுங்கள். என்னால் முடிந்தவரை உதவுகிறேன்."
+  if (msg.includes('help') || msg.includes('உதவி')) {
+    return lang === 'ta'
+      ? 'உங்கள் கேள்வியை எழுதுங்கள். ஆஃப்லைனில் என்னால் முடிந்தவரை உதவுகிறேன்.'
       : "Ask me a question. I'll help with the answers available offline.";
   }
 
-  return lang === "ta"
-    ? "இதற்கான பதில் என்னிடம் தற்போது இல்லை. மேலும் கேள்விகளுக்கு உண்மையான AI இணைப்பு தேவை."
+  if (msg.includes('thank')) {
+    return lang === 'ta'
+      ? 'உங்களுக்கு உதவியதில் மகிழ்ச்சி!'
+      : "You're welcome! Happy to help.";
+  }
+
+  return lang === 'ta'
+    ? 'இதற்கான பதில் என்னிடம் தற்போது இல்லை. விரிவான பதில்களுக்கு உண்மையான AI இணைப்பு தேவை.'
     : "I don't have an offline answer for that yet. A real AI connection is needed for broader questions.";
 }
-  
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang === 'ta' ? 'ta-IN' : 'en-IN';
+  utterance.rate = 1;
+  window.speechSynthesis.speak(utterance);
+}
 
 function sendMessage() {
-  
-  const input = document.getElementById('userInput');
+  const input = $('userInput');
   const text = input.value.trim();
 
   if (!text) {
@@ -207,42 +574,108 @@ function sendMessage() {
 
   addMessage(text, 'user');
   input.value = '';
-  
-const response = getOfflineReply(text);
-addMessage(response, 'ai');
-return;
-  
+
+  const response = getOfflineReply(text);
+  addMessage(response, 'ai');
 }
 
-document.getElementById('userInput').addEventListener(
-  'keydown',
-  function(event) {
-    if (event.key === 'Enter') {
-      sendMessage();
-    }
-  }
-);
+function quickAsk(text) {
+  $('userInput').value = text;
+  sendMessage();
+}
 
+$('userInput').addEventListener('keydown', event => {
+  if (event.key === 'Enter') sendMessage();
+});
+
+function startVoice() {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    $('status').textContent = lang === 'ta'
+      ? 'இந்த உலாவியில் குரல் உள்ளீடு ஆதரிக்கப்படவில்லை.'
+      : 'Voice input is not supported in this browser.';
+    return;
+  }
+
+  if (recognition) {
+    try { recognition.stop(); } catch (e) {}
+  }
+
+  recognition = new SpeechRecognition();
+  recognition.lang = lang === 'ta' ? 'ta-IN' : 'en-IN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  $('micButton').classList.add('listening');
+  $('status').textContent = lang === 'ta'
+    ? 'கேட்கிறது... பேசுங்கள்'
+    : 'Listening... speak now';
+
+  recognition.onresult = event => {
+    $('userInput').value =
+      event.results[0][0].transcript;
+    sendMessage();
+  };
+
+  recognition.onerror = () => {
+    $('status').textContent = lang === 'ta'
+      ? 'குரல் உள்ளீடு தோல்வியடைந்தது. அனுமதிகளைச் சரிபார்க்கவும்.'
+      : 'Voice input failed. Check microphone permissions.';
+  };
+
+  recognition.onend = () => {
+    $('micButton').classList.remove('listening');
+    if ($('status').textContent.includes('Listening') ||
+        $('status').textContent.includes('கேட்கிறது')) {
+      $('status').textContent = lang === 'ta'
+        ? 'முடிந்தது.' : 'Ready.';
+    }
+  };
+
+  try {
+    recognition.start();
+  } catch (e) {
+    $('micButton').classList.remove('listening');
+    $('status').textContent = lang === 'ta'
+      ? 'மீண்டும் முயற்சிக்கவும்.'
+      : 'Please try again.';
+  }
+}
 
 function lesson() {
   const lessons = lang === 'ta'
     ? [
-        'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.',
-        'பாடம் 2: ஒரு பிரச்சினையைச் சிறிய படிகளாகப் பிரித்துத் தீர்க்குங்கள்.',
-        'பாடம் 3: புதிய திறனைப் பயிற்சி செய்வதன் மூலம் மேம்படுத்தலாம்.'
-      ]
+      'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.',
+      'பாடம் 2: பெரிய பிரச்சினைகளைச் சிறிய படிகளாகப் பிரியுங்கள்.',
+      'பாடம் 3: பயிற்சி செய்வதன் மூலம் புதிய திறன்களை வளர்த்துக்கொள்ளலாம்.'
+    ]
     : [
-        'Lesson 1: Learn something new every day.',
-        'Lesson 2: Break a problem into small steps to solve it.',
-        'Lesson 3: Practising a new skill helps you improve.'
-      ];
+      'Lesson 1: Learn something new every day.',
+      'Lesson 2: Break big problems into smaller steps.',
+      'Lesson 3: Practice helps you develop new skills.'
+    ];
 
-  const answer = document.getElementById('answer');
-  const nextLesson = Number(answer.dataset.lesson || 0);
-  answer.textContent = lessons[nextLesson % lessons.length];
-  answer.dataset.lesson = String((nextLesson + 1) % lessons.length);
+  const answer = $('answer');
+  const index = Number(answer.dataset.lesson || 0);
+
+  answer.textContent = lessons[index % lessons.length];
+  answer.dataset.lesson = String((index + 1) % lessons.length);
 }
-  
+
+function clearChat() {
+  $('chatLog').replaceChildren();
+  $('answer').textContent = '';
+  $('answer').dataset.lesson = '0';
+}
+
+$('menuButton').addEventListener('click', () => {
+  const panel = $('menuPanel');
+  const isOpen = panel.classList.toggle('open');
+  $('menuButton').setAttribute('aria-expanded', String(isOpen));
+  $('menuButton').textContent = isOpen ? '✕' : '☰';
+});
 </script>
 </body>
 </html>
