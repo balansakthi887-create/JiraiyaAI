@@ -177,12 +177,26 @@ document.getElementById('userInput').addEventListener(
   }
 );
 
+
 function lesson() {
-  document.getElementById('answer').textContent =
-    lang === 'ta'
-      ? 'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.'
-      : 'Lesson 1: Learn something new every day.';
+  const lessons = lang === 'ta'
+    ? [
+        'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.',
+        'பாடம் 2: ஒரு பிரச்சினையைச் சிறிய படிகளாகப் பிரித்துத் தீர்க்குங்கள்.',
+        'பாடம் 3: புதிய திறனைப் பயிற்சி செய்வதன் மூலம் மேம்படுத்தலாம்.'
+      ]
+    : [
+        'Lesson 1: Learn something new every day.',
+        'Lesson 2: Break a problem into small steps to solve it.',
+        'Lesson 3: Practising a new skill helps you improve.'
+      ];
+
+  const answer = document.getElementById('answer');
+  const nextLesson = Number(answer.dataset.lesson || 0);
+  answer.textContent = lessons[nextLesson % lessons.length];
+  answer.dataset.lesson = String((nextLesson + 1) % lessons.length);
 }
+  
 </script>
 </body>
 </html>
