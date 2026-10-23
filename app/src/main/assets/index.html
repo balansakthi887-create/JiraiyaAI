@@ -522,15 +522,11 @@ footer {
     <button onclick="setLang('ta')">தமிழ்</button>
     <button onclick="clearChat()" id="clearButton">Clear chat</button>
   </div>
-
-  <div class="status-pill">
-    <span class="green-dot"></span>
-    <span id="onlineText">READY TO HELP</span>
-  </div>
-
+  
   <section class="character-stage">
     <img class="character-image"
-      src="images/maxter-character.png"
+  src="images/jiraiya.jpg"
+  alt="Maxter J character">
       alt="Maxter J character"
       onerror="this.style.display='none'; document.getElementById('imageWarning').hidden=false;">
 
@@ -545,13 +541,6 @@ footer {
       </strong>
       <span id="bubbleText">What do you want to know or do today?</span>
     </div>
-  </section>
-
-  <section class="intro">
-    <h1 id="greeting">Hello, I'm Maxter J</h1>
-    <p class="tagline" id="tagline">
-      Your personal companion.<br>Ask, learn and explore.
-    </p>
   </section>
 
   <section class="chat-area">
@@ -577,12 +566,6 @@ footer {
         <span class="voice-circle">➤</span>
         <span id="sendLabel">Send</span>
       </button>
-
-      <button class="voice-action" id="voiceAction" onclick="startVoice()">
-        <span class="voice-circle">♩</span>
-        <span id="voiceLabel">Voice</span>
-      </button>
-    </div>
 
     <p id="status">Offline starter mode • Replies are limited</p>
 
