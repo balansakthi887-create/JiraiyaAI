@@ -2,494 +2,526 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080d1b">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050607">
 <title>Maxter J AI</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 :root {
-  --bg: #080d1b;
-  --panel: #111b30;
-  --blue: #55d8ff;
-  --purple: #9274ff;
-  --text: #f4f7ff;
-  --muted: #98a8c5;
+  --bg: #050607;
+  --panel: #101316;
+  --orange: #ff7908;
+  --orange-light: #ff9b35;
+  --text: #f8f8fa;
+  --muted: #aeb7c5;
+  --line: #292d33;
 }
 
-body {
+* { box-sizing: border-box; }
+
+html, body {
   margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 50% 30%,
-      #19284b 0%, #0b1224 45%, var(--bg) 78%);
+  min-height: 100%;
+  background: var(--bg);
   color: var(--text);
   font-family: Arial, sans-serif;
 }
 
-button, input {
-  font: inherit;
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-button {
-  cursor: pointer;
-  color: var(--text);
-}
+button, input { font: inherit; }
+button { cursor: pointer; color: inherit; }
 
 .app {
-  max-width: 520px;
+  width: 100%;
+  max-width: 600px;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: auto;
-  padding: 18px 18px 28px;
+  padding: max(12px, env(safe-area-inset-top)) 18px
+           max(16px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
+  background:
+    radial-gradient(ellipse at 50% 45%, #20160f55, transparent 65%),
+    #050607;
+  overflow: hidden;
 }
 
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  min-height: 76px;
+  position: relative;
+  z-index: 2;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
+  min-width: 0;
 }
 
 .logo {
-  width: 43px;
-  height: 43px;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
   display: grid;
   place-items: center;
-  border: 1px solid #4b91d7;
-  border-radius: 15px;
-  background: #142541;
-  color: var(--blue);
-  font-size: 24px;
-  box-shadow: 0 0 20px #48bfff20;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  color: var(--orange);
+  font-size: 32px;
+  box-shadow: 0 0 20px #ff79082c;
 }
 
 .brand-name {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: clamp(20px, 5vw, 31px);
+  font-weight: 900;
+  font-style: italic;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
-.brand-sub {
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 4px;
+.brand-name span { color: var(--orange); }
+
+.brand-underline {
+  width: 82%;
+  height: 4px;
+  margin: 4px auto 0;
+  background: var(--orange);
+  transform: rotate(-2deg);
+  border-radius: 4px;
 }
 
-.icon-button {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid #344562;
-  background: #111b30;
-  font-size: 21px;
+.menu-button {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border: 0;
+  background: transparent;
+  color: var(--orange);
+  font-size: 34px;
 }
 
 .menu-panel {
   display: none;
-  margin-top: 12px;
   padding: 14px;
-  border: 1px solid #344562;
+  margin: 8px 0;
+  border: 1px solid #6c3a19;
   border-radius: 16px;
-  background: var(--panel);
+  background: #111315;
 }
 
-.menu-panel.open {
-  display: block;
-}
+.menu-panel.open { display: block; }
 
 .menu-panel button {
   padding: 10px 13px;
-  margin: 4px;
-  border: 1px solid #344562;
-  border-radius: 11px;
-  background: #1a2944;
+  margin: 5px 4px 0 0;
+  border: 1px solid #4a3425;
+  border-radius: 10px;
+  background: #20170f;
 }
 
-.hero {
-  text-align: center;
-  padding-top: 34px;
-}
-
-.online {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: #9debd0;
-  background: #17352f80;
-  border: 1px solid #306451;
-  padding: 7px 12px;
+.status-pill {
+  align-self: center;
+  margin: 12px 0 14px;
+  padding: 8px 14px;
+  color: #e6e8ea;
+  background: #101b18e8;
+  border: 1px solid #3a624c;
   border-radius: 30px;
   font-size: 12px;
+  letter-spacing: .5px;
 }
 
-.dot {
-  width: 7px;
-  height: 7px;
+.green-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
   border-radius: 50%;
-  background: #63e6ad;
-}
- /* Main character area */
-.character-wrap {
-width: 100%;
-max-width: 420px;
-min-height: 300px;
-height: 42vh;
-max-height: 440px;
-margin: 12px auto;
-display: flex;
-align-items: center;
-justify-content: center;
+  background: #16d879;
+  box-shadow: 0 0 9px #16d87965;
 }
 
-/* Large character image */
-.character {
-width: 100%;
-height: 100%;
-max-width: 420px;
-overflow: hidden;
-padding: 0;
-border-radius: 22px;
-background: #111827;
-border: 1px solid rgba(255, 145, 55, 0.45);
-box-shadow: 0 0 28px rgba(255, 110, 35, 0.14);
+/* Character artwork */
+.character-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(390px, 57vh, 650px);
+  min-height: 390px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 50% 45%, #342116 0%, #15100d 55%, #08090a 100%);
 }
 
-.character img {
-display: block;
-width: 100%;
-height: 100%;
-object-fit: contain;
-object-position: center;
-border-radius: inherit;
-}
-
-.orbit {
-  position: absolute;
-  inset: 4px;
-  border: 1px solid #56cfff55;
-  border-radius: 50%;
-  box-shadow: 0 0 35px #5a8fff15;
-}
-
-.orbit:before {
+.character-stage::after {
   content: "";
   position: absolute;
-  inset: 16px;
-  border: 1px dashed #8e83ff60;
-  border-radius: 50%;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #05060708 55%,
+    #05060722 72%,
+    #050607ed 100%
+  );
 }
 
-.character {
+.character-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+/* Greeting bubble */
+.greeting-bubble {
+  position: absolute;
+  z-index: 1;
+  top: 16%;
+  right: 2px;
+  width: min(58%, 290px);
+  padding: 14px 13px;
+  background: #090b0df2;
+  border: 2px solid var(--orange);
+  border-radius: 22px;
+  box-shadow: 0 0 18px #ff79081c;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.greeting-bubble strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+
+.bubble-symbol {
+  color: var(--orange);
+  float: right;
+  font-size: 23px;
+}
+
+.intro {
   position: relative;
-  width: 155px;
-  height: 155px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    #284c78 0%, #172c4c 55%, #101a30 75%);
-  border: 1px solid #60bfff65;
-  box-shadow: 0 0 42px #368bff30;
-  font-size: 88px;
-  animation: float 3s ease-in-out infinite;
+  z-index: 1;
+  margin-top: -70px;
+  padding: 0 8px 18px;
+  text-align: center;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-h1 {
+.intro h1 {
   margin: 0;
-  font-size: 29px;
-  letter-spacing: 1px;
+  font-size: clamp(24px, 6vw, 32px);
 }
 
 .tagline {
+  margin: 8px 0 0;
   color: var(--muted);
-  font-size: 14px;
-  margin-top: 10px;
   line-height: 1.6;
-}
-
-.quick-actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin: 26px 0 18px;
-}
-
-.quick {
-  padding: 14px 5px;
-  border: 1px solid #293a59;
-  border-radius: 15px;
-  background: #121e34cc;
-  font-size: 12px;
-}
-
-.quick span {
-  display: block;
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
-.chat-panel {
-  padding: 16px;
-  border: 1px solid #2b3e60;
-  border-radius: 22px;
-  background: #111b30eF;
-  box-shadow: 0 12px 40px #00000020;
-}
-
-.panel-title {
   font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 13px;
 }
 
-#chatLog {
+.chat-area {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.chat-log {
   display: flex;
   flex-direction: column;
   gap: 9px;
-  max-height: 220px;
+  max-height: 155px;
   overflow-y: auto;
-  margin-bottom: 13px;
+  margin-bottom: 12px;
 }
 
 .chat-message {
-  padding: 11px 13px;
+  padding: 10px 13px;
   border-radius: 13px;
   line-height: 1.5;
   font-size: 14px;
   overflow-wrap: anywhere;
-  text-align: left;
 }
 
 .user-message {
   align-self: flex-end;
   max-width: 90%;
-  background: #263f69;
+  background: #342116;
+  border: 1px solid #70401d;
 }
 
 .ai-message {
   align-self: flex-start;
   max-width: 95%;
-  background: #192640;
-  color: #b5f3e2;
+  background: #151719;
+  border: 1px solid #39332e;
+  color: #f5d8bd;
 }
 
-.input-row {
+/* Reference-style message composer */
+.composer {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  width: 100%;
+  min-height: 76px;
+  padding: 9px 10px;
+  border: 2px solid var(--orange);
+  border-radius: 48px;
+  background: #0b0e10f5;
+  box-shadow: 0 0 22px #ff790825;
+}
+
+.attach-button {
+  width: 40px;
+  height: 46px;
+  flex: 0 0 40px;
+  border: 0;
+  background: transparent;
+  color: #d7deeb;
+  font-size: 32px;
 }
 
 #userInput {
-  width: 100%;
+  flex: 1;
+  width: 0;
   min-width: 0;
-  padding: 15px;
-  color: white;
-  background: #080f20;
-  border: 1px solid #344967;
-  border-radius: 14px;
+  padding: 12px 2px;
+  border: 0;
   outline: none;
+  color: white;
+  background: transparent;
   font-size: 16px;
 }
 
-#userInput:focus {
-  border-color: var(--blue);
+#userInput::placeholder { color: #a3afc1; }
+
+.composer-mic {
+  width: 38px;
+  height: 44px;
+  flex: 0 0 38px;
+  border: 0;
+  background: transparent;
+  color: #dbe3f1;
+  font-size: 26px;
 }
 
-#userInput::placeholder {
-  color: #8191ad;
+.send-button {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #111;
+  font-size: 30px;
+  font-weight: bold;
+  box-shadow: 0 0 16px #ff79082c;
 }
 
-.send-row {
+.send-button:active { transform: scale(.95); }
+
+.voice-actions {
   display: flex;
   justify-content: center;
-  gap: 13px;
-  margin-top: 13px;
+  gap: 44px;
+  padding: 16px 0 18px;
 }
 
-.action-button {
-  min-width: 64px;
-  min-height: 52px;
-  padding: 10px 20px;
-  border-radius: 16px;
-  border: 1px solid #5265c9;
-  background: linear-gradient(135deg, #397edc, #7554d8);
-  font-size: 23px;
-  box-shadow: 0 0 22px #6b71ff20;
+.voice-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  color: #d4d9e1;
+  background: transparent;
+  border: 0;
+  font-size: 13px;
 }
 
-.mic-button {
-  border-color: #3b5d7e;
-  background: #1a2c46;
+.voice-circle {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #353b43;
+  border-radius: 50%;
+  background: #101316;
+  font-size: 28px;
 }
 
-.mic-button.listening {
-  border-color: #ff8282;
-  background: #642c42;
+.voice-action:first-child .voice-circle {
+  color: var(--orange);
+  border-color: var(--orange);
+  box-shadow: 0 0 18px #ff79082b;
 }
 
-.small {
-  margin: 12px 0 0;
-  color: var(--muted);
+.voice-action.listening .voice-circle {
+  border-color: #ff5d5d;
+  color: #ff7777;
+}
+
+#status {
+  margin: 0;
   text-align: center;
-  font-size: 11px;
+  color: #8993a1;
+  font-size: 12px;
   line-height: 1.5;
-}
-
-#answer {
-  color: #b5f3e2;
-  line-height: 1.6;
-  font-size: 14px;
-  overflow-wrap: anywhere;
 }
 
 .learn-button {
   width: 100%;
   padding: 13px;
   margin-top: 12px;
-  border: 1px solid #344562;
+  border: 1px solid #39332e;
   border-radius: 13px;
-  background: #1a2944;
+  background: #131619;
+  color: #f5d8bd;
+}
+
+#answer {
+  color: #f5d8bd;
+  line-height: 1.6;
+  font-size: 14px;
+  overflow-wrap: anywhere;
 }
 
 footer {
-  text-align: center;
-  padding: 23px 0 4px;
-  color: #71819f;
-  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 15px 5px 4px;
+  border-top: 1px solid #292d33;
+  color: #c3cad4;
+  font-size: 12px;
 }
 
-@media (max-width: 360px) {
-  .app { padding: 14px 12px 24px; }
-  .character-wrap {
-    transform: scale(.9);
-    margin-top: 12px;
-  }
-  h1 { font-size: 25px; }
-}
+.footer-online { color: #14d879; }
 
-/* Character image */
-.character {
-  overflow: hidden;
-  padding: 0;
-}
-
-.character img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 50%;
-  display: block;
+@media (max-width: 380px) {
+  .app { padding-left: 12px; padding-right: 12px; }
+  .logo { width: 48px; height: 48px; flex-basis: 48px; }
+  .brand-name { font-size: 20px; }
+  .character-stage { height: 54vh; min-height: 360px; }
+  .greeting-bubble { font-size: 13px; padding: 10px; }
+  .greeting-bubble strong { font-size: 15px; }
+  .composer { min-height: 66px; padding: 6px 8px; gap: 5px; }
+  .send-button { width: 48px; height: 48px; flex-basis: 48px; }
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-
-<header>
-  <div class="brand">
-    <div class="logo">油</div>
-    <div>
-      <div class="brand-name">MAXTER J</div>
-      <div class="brand-sub">YOUR PERSONAL AI</div>
+  <header>
+    <div class="brand">
+      <div class="logo">油</div>
+      <div>
+        <div class="brand-name">MAXTER <span>J</span></div>
+        <div class="brand-underline"></div>
+      </div>
     </div>
-  </div>
+    <button class="menu-button" id="menuButton"
+      aria-label="Open menu" aria-expanded="false">☰</button>
+  </header>
 
-  <button class="icon-button" id="menuButton"
-    aria-label="Open menu" aria-expanded="false">☰</button>
-</header>
-
-<div class="menu-panel" id="menuPanel">
-  <strong id="languageTitle">Language / மொழி</strong>
-  <div>
+  <div class="menu-panel" id="menuPanel">
+    <strong id="languageTitle">Language / மொழி</strong><br>
     <button onclick="setLang('en')">English</button>
     <button onclick="setLang('ta')">தமிழ்</button>
+    <button onclick="clearChat()" id="clearButton">Clear chat</button>
   </div>
-  <button onclick="clearChat()" id="clearButton">Clear chat</button>
-</div>
 
-<section class="hero">
-  <div class="online">
-    <span class="dot"></span>
+  <div class="status-pill">
+    <span class="green-dot"></span>
     <span id="onlineText">READY TO HELP</span>
   </div>
 
-  <div class="character-wrap">
-    <div class="orbit"></div>
-    <div class="character" aria-label="Maxter J character">
-  <img
-    src="images/maxter-character.png"
-    alt="Maxter J character"
-  >
+  <section class="character-stage">
+    <img class="character-image"
+      src="images/maxter-character.png"
+      alt="Maxter J character"
+      onerror="this.style.display='none'; document.getElementById('imageWarning').hidden=false;">
+
+    <div id="imageWarning" hidden
+      style="position:absolute;inset:35% 10%;text-align:center;color:#ff9b35;z-index:2">
+      Character image not found. Check the filename in the images folder.
     </div>
-  </div>
 
-  <h1 id="greeting">Hello, I'm Maxter J</h1>
-  <p class="tagline" id="tagline">
-    Your personal companion.<br>
-    Ask, learn and explore.
-  </p>
-</section>
+    <div class="greeting-bubble">
+      <strong><span id="bubbleTitle">Hey! I'm Jiraiya</span>
+        <span class="bubble-symbol">☯</span>
+      </strong>
+      <span id="bubbleText">What do you want to know or do today?</span>
+    </div>
+  </section>
 
-<div class="quick-actions">
-  <button class="quick" onclick="quickAsk('help')">
-    <span>✦</span><span id="quickHelp">Ask AI</span>
-  </button>
-  <button class="quick" onclick="lesson()">
-    <span>▤</span><span id="quickLearn">Learn</span>
-  </button>
-  <button class="quick" onclick="startVoice()">
-    <span>🎙</span><span id="quickVoice">Talk</span>
-  </button>
-</div>
+  <section class="intro">
+    <h1 id="greeting">Hello, I'm Maxter J</h1>
+    <p class="tagline" id="tagline">
+      Your personal companion.<br>Ask, learn and explore.
+    </p>
+  </section>
 
-<section class="chat-panel">
-  <div class="panel-title" id="chatTitle">Conversation</div>
+  <section class="chat-area">
+    <div class="chat-log" id="chatLog" aria-live="polite"></div>
 
-  <div id="chatLog" aria-live="polite"></div>
+    <div class="composer">
+      <button class="attach-button" id="attachButton"
+        aria-label="Attachment" title="Attachment">＋</button>
 
-  <div class="input-row">
-    <input id="userInput" type="text" maxlength="500"
-      placeholder="Ask me anything..."
-      aria-label="Your message">
-  </div>
+      <input id="userInput" type="text" maxlength="500"
+        placeholder="Ask Maxter J anything..."
+        aria-label="Your message">
 
-  <div class="send-row">
-    <button class="action-button" id="sendButton"
-      onclick="sendMessage()" aria-label="Send message">➤</button>
+      <button class="composer-mic" id="composerMic"
+        onclick="startVoice()" aria-label="Speak">♩</button>
 
-    <button class="action-button mic-button" id="micButton"
-      onclick="startVoice()" aria-label="Speak">🎙</button>
-  </div>
+      <button class="send-button" id="sendButton"
+        onclick="sendMessage()" aria-label="Send message">↑</button>
+    </div>
 
-  <p class="small" id="status">
-    Offline starter mode • Replies are limited
-  </p>
+    <div class="voice-actions">
+      <button class="voice-action" onclick="sendMessage()">
+        <span class="voice-circle">➤</span>
+        <span id="sendLabel">Send</span>
+      </button>
 
-  <button class="learn-button" onclick="lesson()" id="lessonButton">
-    ✧ Learn something new
-  </button>
+      <button class="voice-action" id="voiceAction" onclick="startVoice()">
+        <span class="voice-circle">♩</span>
+        <span id="voiceLabel">Voice</span>
+      </button>
+    </div>
 
-  <p id="answer"></p>
-</section>
+    <p id="status">Offline starter mode • Replies are limited</p>
 
-<footer>MAXTER J • YOUR AI COMPANION</footer>
+    <button class="learn-button" onclick="lesson()" id="lessonButton">
+      ✧ Learn something new
+    </button>
+    <p id="answer"></p>
+  </section>
+
+  <footer>
+    <span><span class="footer-online">●</span>
+      <span id="footerStatus">Online • Starter mode</span></span>
+    <span id="connectionText">◉ Auto Switch</span>
+  </footer>
 </div>
 
 <script>
@@ -513,23 +545,23 @@ function setLang(value) {
   $('onlineText').textContent = value === 'ta'
     ? 'உதவத் தயார்' : 'READY TO HELP';
 
-  $('quickHelp').textContent = value === 'ta' ? 'கேளுங்கள்' : 'Ask AI';
-  $('quickLearn').textContent = value === 'ta' ? 'கற்றல்' : 'Learn';
-  $('quickVoice').textContent = value === 'ta' ? 'பேசுங்கள்' : 'Talk';
-  $('chatTitle').textContent = value === 'ta' ? 'உரையாடல்' : 'Conversation';
+  $('bubbleTitle').textContent = value === 'ta'
+    ? 'வணக்கம்! நான் ஜிரையா'
+    : "Hey! I'm Jiraiya";
+
+  $('bubbleText').textContent = value === 'ta'
+    ? 'இன்று என்ன தெரிந்துகொள்ள அல்லது செய்ய விரும்புகிறீர்கள்?'
+    : 'What do you want to know or do today?';
 
   $('userInput').placeholder = value === 'ta'
-    ? 'உங்கள் கேள்வியை எழுதுங்கள்...'
-    : 'Ask me anything...';
+    ? 'மேக்ஸ்டர் ஜேவிடம் கேளுங்கள்...'
+    : 'Ask Maxter J anything...';
 
-  $('userInput').setAttribute('aria-label',
-    value === 'ta' ? 'உங்கள் செய்தி' : 'Your message');
+  $('chatLog').setAttribute('aria-label',
+    value === 'ta' ? 'உரையாடல்' : 'Conversation');
 
-  $('sendButton').setAttribute('aria-label',
-    value === 'ta' ? 'செய்தி அனுப்பு' : 'Send message');
-
-  $('micButton').setAttribute('aria-label',
-    value === 'ta' ? 'பேசுங்கள்' : 'Speak');
+  $('sendLabel').textContent = value === 'ta' ? 'அனுப்பு' : 'Send';
+  $('voiceLabel').textContent = value === 'ta' ? 'குரல்' : 'Voice';
 
   $('status').textContent = value === 'ta'
     ? 'ஆஃப்லைன் தொடக்கப் பதிப்பு • பதில்கள் குறைவானவை'
@@ -544,6 +576,9 @@ function setLang(value) {
 
   $('clearButton').textContent = value === 'ta'
     ? 'உரையாடலை அழி' : 'Clear chat';
+
+  $('footerStatus').textContent = value === 'ta'
+    ? 'தொடக்கப் பதிப்பு' : 'Online • Starter mode';
 }
 
 function addMessage(text, type) {
@@ -601,7 +636,6 @@ function getOfflineReply(text) {
 
 function speak(text) {
   if (!('speechSynthesis' in window)) return;
-
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang === 'ta' ? 'ta-IN' : 'en-IN';
@@ -612,7 +646,6 @@ function speak(text) {
 function sendMessage() {
   const input = $('userInput');
   const text = input.value.trim();
-
   if (!text) {
     input.focus();
     return;
@@ -623,11 +656,6 @@ function sendMessage() {
 
   const response = getOfflineReply(text);
   addMessage(response, 'ai');
-}
-
-function quickAsk(text) {
-  $('userInput').value = text;
-  sendMessage();
 }
 
 $('userInput').addEventListener('keydown', event => {
@@ -654,14 +682,13 @@ function startVoice() {
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
-  $('micButton').classList.add('listening');
+  $('voiceAction').classList.add('listening');
   $('status').textContent = lang === 'ta'
     ? 'கேட்கிறது... பேசுங்கள்'
     : 'Listening... speak now';
 
   recognition.onresult = event => {
-    $('userInput').value =
-      event.results[0][0].transcript;
+    $('userInput').value = event.results[0][0].transcript;
     sendMessage();
   };
 
@@ -672,18 +699,14 @@ function startVoice() {
   };
 
   recognition.onend = () => {
-    $('micButton').classList.remove('listening');
-    if ($('status').textContent.includes('Listening') ||
-        $('status').textContent.includes('கேட்கிறது')) {
-      $('status').textContent = lang === 'ta'
-        ? 'முடிந்தது.' : 'Ready.';
-    }
+    $('voiceAction').classList.remove('listening');
+    $('status').textContent = lang === 'ta' ? 'தயார்.' : 'Ready.';
   };
 
   try {
     recognition.start();
   } catch (e) {
-    $('micButton').classList.remove('listening');
+    $('voiceAction').classList.remove('listening');
     $('status').textContent = lang === 'ta'
       ? 'மீண்டும் முயற்சிக்கவும்.'
       : 'Please try again.';
@@ -695,7 +718,7 @@ function lesson() {
     ? [
       'பாடம் 1: தினமும் புதிய ஒன்றைக் கற்றுக்கொள்ளுங்கள்.',
       'பாடம் 2: பெரிய பிரச்சினைகளைச் சிறிய படிகளாகப் பிரியுங்கள்.',
-      'பாடம் 3: பயிற்சி செய்வதன் மூலம் புதிய திறன்களை வளர்த்துக்கொள்ளலாம்.'
+      'பாடம் 3: பயிற்சி புதிய திறன்களை வளர்க்க உதவும்.'
     ]
     : [
       'Lesson 1: Learn something new every day.',
@@ -705,7 +728,6 @@ function lesson() {
 
   const answer = $('answer');
   const index = Number(answer.dataset.lesson || 0);
-
   answer.textContent = lessons[index % lessons.length];
   answer.dataset.lesson = String((index + 1) % lessons.length);
 }
@@ -721,6 +743,12 @@ $('menuButton').addEventListener('click', () => {
   const isOpen = panel.classList.toggle('open');
   $('menuButton').setAttribute('aria-expanded', String(isOpen));
   $('menuButton').textContent = isOpen ? '✕' : '☰';
+});
+
+$('attachButton').addEventListener('click', () => {
+  $('status').textContent = lang === 'ta'
+    ? 'கோப்பு இணைப்பு இன்னும் செயல்படுத்தப்படவில்லை.'
+    : 'File attachments are not implemented yet.';
 });
 </script>
 </body>
