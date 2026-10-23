@@ -259,17 +259,16 @@ header {
 
 .user-message {
   align-self: flex-end;
-  max-width: 90%;
-  background: #342116;
-  border: 1px solid #70401d;
+  text-align: right;
+  background: #24170f;
+  border: 1px solid #78401b;
 }
 
 .ai-message {
   align-self: flex-start;
-  max-width: 95%;
+  text-align: left;
   background: #151719;
   border: 1px solid #39332e;
-  color: #f5d8bd;
 }
 
 /* Reference-style message composer */
@@ -447,33 +446,20 @@ html, body {
 
 .character-stage {
   flex: 1 1 auto;
-  height: auto;
   min-height: 0;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  background: #08090a;
 }
 
 .character-image {
-  display: block !important;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 /* Hide unwanted headings and status */
 .status-pill,
 .intro {
-  display: none !important;
-}
-
-/* One input bar only */
-.voice-actions,
-.learn-button,
-#answer {
   display: none !important;
 }
 
@@ -525,7 +511,7 @@ footer {
   
   <section class="character-stage">
     <img class="character-image"
-  src="images/jiraiya.jpg"
+  src="images/maxter-character.jpg"
   alt="Maxter J character">
       alt="Maxter J character"
       onerror="this.style.display='none'; document.getElementById('imageWarning').hidden=false;">
