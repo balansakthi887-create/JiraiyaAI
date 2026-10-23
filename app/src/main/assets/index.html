@@ -18,15 +18,14 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
   overscroll-behavior: none;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
+  touch-action: pan-x pan-y;
 }
 
 button, input {
@@ -40,18 +39,10 @@ button {
 
 .app {
   width: 100%;
-  max-width: 600px;
   height: 100vh;
   height: 100dvh;
-  margin: auto;
-  padding: max(8px, env(safe-area-inset-top)) 14px
-           max(8px, env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
+  min-height: 0;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 45%, #20160f55, transparent 65%),
-    #050607;
 }
 
 header {
@@ -136,17 +127,9 @@ header {
 
 /* Main character scene */
 .character-stage {
-  position: relative;
   flex: 1 1 auto;
   min-height: 0;
-  width: 100%;
-  margin: 4px 0 10px;
-  overflow: hidden;
-  border-radius: 20px;
-  background:
-    radial-gradient(ellipse at 50% 42%, #342116 0%, #15100d 58%, #08090a 100%);
 }
-
 .character-image {
   display: block;
   width: 100%;
@@ -192,21 +175,12 @@ header {
 
 /* Conversation stays inside this area */
 .chat-area {
-  flex: 0 0 auto;
-  min-height: 0;
-  padding-top: 2px;
+  flex-shrink: 0;
 }
 
 .chat-log {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  max-height: 15vh;
+  max-height: 12vh;
   overflow-y: auto;
-  overscroll-behavior: contain;
-  margin-bottom: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: #6c452b transparent;
 }
 
 .chat-message {
@@ -234,18 +208,8 @@ header {
 
 /* One composer and one send button */
 .composer {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  width: 100%;
-  min-height: 66px;
-  padding: 6px 8px;
-  border: 2px solid var(--orange);
-  border-radius: 44px;
-  background: #0b0e10;
-  box-shadow: 0 0 18px #ff790825;
+  flex-shrink: 0;
 }
-
 .attach-button {
   width: 35px;
   height: 42px;
@@ -373,10 +337,18 @@ footer {
 </div>
 
 <section class="character-stage">
-  <img class="character-image"
-    id="characterImage"
-    src="images/21574.png"
-    alt="Maxter J character">
+  <img
+    class="character-image"
+    src="./images/21574.png"
+    alt="Maxter J character"
+    onerror="this.style.display='none';"
+  >
+
+  <div class="greeting-bubble">
+    <strong>Hey! I'm Jiraiya</strong>
+    <span>What do you want to know or do today?</span>
+  </div>
+</section>
 
   <div class="image-warning" id="imageWarning" hidden>
     Character image missing. Check images/21574.png in GitHub.
