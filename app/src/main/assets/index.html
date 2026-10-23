@@ -154,6 +154,65 @@ header {
   object-fit: contain;
   object-position: center bottom;
 }
+  
+/* Maxter J full-body 2D animation */
+.character-image {
+  animation: maxterIdle 3s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+@keyframes maxterIdle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-7px) scale(1.008);
+  }
+}
+
+/* Actions triggered by the app */
+.character-stage.action-greeting .character-image {
+  animation: maxterGreeting 0.7s ease-in-out 2;
+}
+
+@keyframes maxterGreeting {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  35% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+  70% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+.character-stage.action-thinking .character-image {
+  animation: maxterThinking 1s ease-in-out infinite alternate;
+}
+
+@keyframes maxterThinking {
+  from {
+    transform: translateY(0) rotate(-1deg);
+  }
+  to {
+    transform: translateY(-4px) rotate(1deg);
+  }
+}
+
+.character-stage.action-speaking .character-image {
+  animation: maxterSpeaking 0.45s ease-in-out infinite alternate;
+}
+
+@keyframes maxterSpeaking {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(-3px) scale(1.01);
+  }
+}
 
 .image-warning {
   position: absolute;
