@@ -617,14 +617,47 @@ function getOfflineReply(text) {
     : "I don't have an offline answer for that yet. A real AI connection is needed for broader questions.";
 }
 
+
+function setCharacterAction(action, duration = 0) {
+  const stage = document.querySelector('.character-stage');
+
+  stage.classList.remove(
+    'action-greeting',
+    'action-thinking',
+    'action-speaking'
+  );
+
+  if (action) {
+    stage.classList.add('action-' + action);
+  }
+
+  if (duration > 0) {
+    window.setTimeout(() => {
+      stage.classList.remove('action-' + action);
+    }, duration);
+  }
+}
+
 function speak(text) {
-  if (!('speechSynthesis' in window)) return;
+  if (!('speechSynthesis' in window)) {
+    setCharacterAction('speaking', 1500);
+    return;
+  }
 
   window.speechSynthesis.cancel();
+  setCharacterAction('speaking');
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang === 'ta' ? 'ta-IN' : 'en-IN';
   utterance.rate = 1;
+
+  utterance.onend = () => {
+    setCharacterAction('');
+  };
+
+  utterance.onerror = () => {
+    setCharacterAction('');
+  };
 
   window.speechSynthesis.speak(utterance);
 }
