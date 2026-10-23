@@ -423,24 +423,21 @@ footer {
   .composer { min-height: 66px; padding: 6px 8px; gap: 5px; }
   .send-button { width: 48px; height: 48px; flex-basis: 48px; }
 }
-</style/* Maxter J: fixed full-screen layout */
-html, body {
+</style
+/* Keep the app fixed to the phone screen */
+html,
+body {
   width: 100%;
   height: 100%;
-  min-height: 0;
   margin: 0;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .app {
-  width: 100%;
-  max-width: 600px;
   height: 100vh;
   height: 100dvh;
   min-height: 0;
-  padding: max(8px, env(safe-area-inset-top))
-           12px
-           max(8px, env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
@@ -449,13 +446,33 @@ html, body {
   min-height: 0;
 }
 
-.character-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+.chat-area {
+  flex: 0 0 auto;
+  margin-top: 0;
 }
+
+.chat-log {
+  max-height: 12vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.composer {
+  flex-shrink: 0;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* Hide duplicate controls */
+.voice-actions,
+.learn-button,
+#answer,
+#status {
+  display: none !important;
+}
+  >
 
 /* Hide unwanted headings and status */
 .status-pill,
@@ -547,17 +564,8 @@ footer {
         onclick="sendMessage()" aria-label="Send message">↑</button>
     </div>
 
-    <div class="voice-actions">
-      <button class="voice-action" onclick="sendMessage()">
-        <span class="voice-circle">➤</span>
-        <span id="sendLabel">Send</span>
-      </button>
-
     <p id="status">Offline starter mode • Replies are limited</p>
-
-    <button class="learn-button" onclick="lesson()" id="lessonButton">
-      ✧ Learn something new
-    </button>
+  
     <p id="answer"></p>
   </section>
 
