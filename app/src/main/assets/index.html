@@ -350,10 +350,40 @@ footer {
 
 @media (max-width: 360px) {
   .app { padding: 14px 12px 24px; }
-  .character-wrap { transform: scale(.9); margin-top: 12px; }
+  .character-wrap {
+    transform: scale(.9);
+    margin-top: 12px;
+  }
   h1 { font-size: 25px; }
 }
-</style>
+
+/* Character image */
+.character {
+  overflow: hidden;
+  padding: 0;
+}
+
+.character img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+}
+</style .character {
+  overflow: hidden;
+  padding: 0;
+}
+
+.character img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+}>
 </head>
 
 <body>
@@ -389,8 +419,11 @@ footer {
 
   <div class="character-wrap">
     <div class="orbit"></div>
-    <div class="character" aria-label="Temporary character">
-      🧙🏻‍♂️
+    <div class="character" aria-label="Maxter J character">
+  <img
+    src="images/maxter-character.png"
+    alt="Maxter J character"
+  >
     </div>
   </div>
 
