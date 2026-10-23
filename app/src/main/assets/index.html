@@ -674,8 +674,17 @@ function sendMessage() {
   addMessage(text, 'user');
   input.value = '';
 
-  const response = getOfflineReply(text);
-  addMessage(response, 'ai');
+addMessage(text, 'user');
+input.value = '';
+
+setCharacterAction('thinking');
+
+const response = getOfflineReply(text);
+addMessage(response, 'ai');
+
+setCharacterAction('speaking', 1800);
+speak(response);
+  
 }
 
 $('sendButton').addEventListener('click', sendMessage);
