@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#050607">
 <title>Maxter J AI</title>
 
@@ -311,6 +311,17 @@ footer {
 }
 
 @media (max-height: 650px) {
+  html,
+body {
+  touch-action: pan-x pan-y;
+  overscroll-behavior: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
     /* Keep the Maxter J screen fixed */
 html,
 body {
