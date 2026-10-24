@@ -357,18 +357,6 @@ header {
   font-weight: bold;
 }
 
-footer {
-  flex: 0 0 26px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 6px;
-  border-top: 1px solid #292d33;
-  color: #aeb7c5;
-  font-size: 11px;
-}
-
 @media (max-height: 650px) {
   html,
 body {
@@ -498,7 +486,7 @@ flex-shrink: 0;
 </section>
 
 <section class="chat-area">
-  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chat-log" id="chatLog" aria-live="polite" hidden></div>
 
   <div class="composer">
     <button class="attach-button" id="attachButton"
@@ -515,11 +503,6 @@ flex-shrink: 0;
       aria-label="Send message">↑</button>
   </div>
 </section>
-
-<footer>
-  <span id="footerStatus">● Offline • Starter mode</span>
-  <span id="connectionText">Auto Switch</span>
-</footer>
 
 </div>
 
@@ -662,7 +645,11 @@ function speak(text) {
   window.speechSynthesis.speak(utterance);
 }
 
+let isSending = false;
+
 function sendMessage() {
+  if (isSending) return;
+
   const input = $('userInput');
   const text = input.value.trim();
 
@@ -671,30 +658,23 @@ function sendMessage() {
     return;
   }
 
-  addMessage(text, 'user');
+  isSending = true;
   input.value = '';
 
-addMessage(text, 'user');
-input.value = '';
+  addMessage(text, 'user');
 
-setCharacterAction('thinking');
+  setCharacterAction('thinking');
 
-const response = getOfflineReply(text);
-addMessage(response, 'ai');
+  const response = getOfflineReply(text);
+  addMessage(response, 'ai');
 
-setCharacterAction('speaking', 1800);
-speak(response);
-  
+  setCharacterAction('speaking', 1800);
+  speak(response);
+
+  setTimeout(() => {
+    isSending = false;
+  }, 500);
 }
-
-$('sendButton').addEventListener('click', sendMessage);
-
-$('userInput').addEventListener('keydown', event => {
-  if (event.key === 'Enter') {
-    event.preventDefault();
-    sendMessage();
-  }
-});
 
 function startVoice() {
   const SpeechRecognition =
