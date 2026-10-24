@@ -49,9 +49,11 @@ button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
   background:
-    radial-gradient(ellipse at 50% 45%, #20160f55, transparent 65%),
-    #050607;
+    linear-gradient(#05060722, #05060744),
+    url("images/village-bg.png") center center / cover no-repeat;
+  background: transparent;
 }
 
 header {
@@ -434,11 +436,6 @@ flex-shrink: 0;
     height: 43px;
     flex-basis: 43px;
   }
-
-  footer {
-    flex-basis: 22px;
-    margin-top: 4px;
-  }
 }
 </style>
 </head>
@@ -482,25 +479,6 @@ flex-shrink: 0;
       <span class="bubble-symbol">☯</span>
     </strong>
     <span id="bubbleText">What do you want to know or do today?</span>
-  </div>
-</section>
-
-<section class="chat-area">
-  <div class="chat-log" id="chatLog" aria-live="polite" hidden></div>
-
-  <div class="composer">
-    <button class="attach-button" id="attachButton"
-      aria-label="Attachment" title="Attachment">＋</button>
-
-    <input id="userInput" type="text" maxlength="500"
-      placeholder="Ask Maxter J anything..."
-      aria-label="Your message">
-
-    <button class="composer-mic" id="composerMic"
-      aria-label="Voice input" title="Voice input">♩</button>
-
-    <button class="send-button" id="sendButton"
-      aria-label="Send message">↑</button>
   </div>
 </section>
 
