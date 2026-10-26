@@ -1,3 +1,4 @@
+# File Path in Repo: .github/workflows/build-apk.yml
 name: Build JiraiyaAI APK
 
 on:
@@ -7,9 +8,13 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,8 +25,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Setup Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
 
       - name: Build Debug APK
         run: gradle assembleDebug
@@ -29,5 +36,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: JiraiyaAI-Tamil-Overlay-debug
+          name: Maxter-J-AI-debug-APK
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
