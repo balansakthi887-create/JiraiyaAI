@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Maxter J</string>
-    <string name="accessibility_service_description">Allows Maxter J AI to perform hands-free system navigation actions (Go Back, Go to Home screen, and Open Recent Apps) when you speak a navigation voice command. Maxter J does not read or store your screen content.</string>
-</resources>
