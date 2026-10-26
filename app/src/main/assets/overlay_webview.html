@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Jiraiya Floating Overlay</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+  html, body {
+    width: 100%; height: 100%;
+    background: transparent !important;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .overlay-root {
+    position: relative;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chakra-ring {
+    position: relative;
+    width: 90%; height: 90%;
+    max-width: 240px; max-height: 240px;
+    border-radius: 50%;
+    border: 3px solid #ef4444;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.75), inset 0 0 14px rgba(34, 197, 94, 0.55);
+    animation: floatBob 2.6s ease-in-out infinite;
+    background: radial-gradient(circle at 50% 35%, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .chakra-ring.speaking {
+    border-color: #f59e0b;
+    box-shadow: 0 0 26px rgba(245, 158, 11, 0.95), 0 0 42px rgba(239, 68, 68, 0.75);
+    animation: sagePulse 0.45s ease-in-out infinite alternate;
+  }
+  .avatar-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .mouth-wave {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 3px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .chakra-ring.speaking .mouth-wave {
+    opacity: 1;
+  }
+  .mouth-wave span {
+    width: 4px; height: 12px;
+    background: #fbbf24;
+    border-radius: 3px;
+    animation: waveBar 0.35s ease-in-out infinite alternate;
+  }
+  .mouth-wave span:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+  .mouth-wave span:nth-child(3) { animation-delay: 0.2s; height: 14px; }
+  .quick-controls {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    display: flex;
+    gap: 4px;
+  }
+  .mini-btn {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(15, 23, 42, 0.9);
+    color: #fff;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @keyframes floatBob {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes sagePulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.06); }
+  }
+  @keyframes waveBar {
+    0% { transform: scaleY(0.4); }
+    100% { transform: scaleY(1.3); }
+  }
+</style>
+</head>
+<body>
+<div class="overlay-root">
+  <div id="jiraiyaRing" class="chakra-ring" onclick="triggerTamilGreeting()">
+    <img src="images/maxter-j-main.png" class="avatar-img" alt="Jiraiya" onerror="this.style.display='none'">
+    <div class="mouth-wave"><span></span><span></span><span></span></div>
+  </div>
+  <div class="quick-controls">
+    <button class="mini-btn" onclick="changeSize(20)" title="Bigger">+</button>
+    <button class="mini-btn" onclick="changeSize(-20)" title="Smaller">-</button>
+    <button class="mini-btn" onclick="closeBubble()" title="Close">✕</button>
+  </div>
+</div>
+<script>
+  let currentDp = 140;
+  const tamilLines = [
+    "ஹாஹாஹா! நான் தான் மவுண்ட் மியோபோகுவின் தவளை முனிவர் ஜிரையா! என்ன உதவி வேண்டும் நண்பா?",
+    "கவலைப்படாதே! ஒரு உண்மையான நிஞ்ஜா எப்போதும் தன் முயற்சியை கைவிட மாட்டான்!",
+    "ரசengan சக்ரா தயாராக இருக்கிறது! எந்த செயலியின் மேலேயும் என்னை நகர்த்தலாம்!"
+  ];
+  let idx = 0;
+
+  function triggerTamilGreeting() {
+    const ring = document.getElementById('jiraiyaRing');
+    ring.classList.add('speaking');
+    const line = tamilLines[idx % tamilLines.length];
+    idx++;
+    if (window.JiraiyaOverlayBridge && window.JiraiyaOverlayBridge.speakTamilJiraiya) {
+      window.JiraiyaOverlayBridge.speakTamilJiraiya(line);
+    }
+    setTimeout(() => ring.classList.remove('speaking'), 4200);
+  }
+
+  function changeSize(delta) {
+    currentDp = Math.max(70, Math.min(300, currentDp + delta));
+    if (window.JiraiyaOverlayBridge && window.JiraiyaOverlayBridge.resizeOverlay) {
+      window.JiraiyaOverlayBridge.resizeOverlay(currentDp);
+    }
+  }
+
+  function closeBubble() {
+    if (window.JiraiyaOverlayBridge && window.JiraiyaOverlayBridge.closeOverlay) {
+      window.JiraiyaOverlayBridge.closeOverlay();
+    }
+  }
+</script>
+</body>
+</html>
