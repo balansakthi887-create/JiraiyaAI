@@ -1,0 +1,9 @@
+# File Path in Repo: netlify.toml
+[build]
+  publish = "app/src/main/assets"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
